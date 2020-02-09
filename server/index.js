@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const massive = require('massive')
-const axios = require('axios')
+const Axios = require('axios')
 
 require('dotenv').config()
 

@@ -1,11 +1,33 @@
 import React, { Component } from 'react'
 import { Input, Button } from 'antd'
 import { connect } from 'react-redux'
+import PatientTable from './PatientTable'
+import Axios from 'axios'
 
 class App extends Component {
   constructor () {
     super()
     this.state = {}
+  }
+
+  componentDidMount = () => {
+    Axios.get('/api/getPatients').then(resp => {
+      console.log('getPatients:', resp)
+      this.props.setPatientList(resp.data)
+    })
+  }
+  addPatient = e => {
+    Axios.post('/api/createPatients', {
+      id: this.props.patient.patient_id,
+      firstName: this.props.patient.first_name,
+      lastName: this.props.patient.last_name,
+      doctor: this.props.patient.doctor,
+      insurance: this.props.patient.insurance,
+      amountOwed: this.props.patient.amount_owed
+    }).then(resp => {
+      console.log(resp)
+      this.props.setPatientList(resp.data)
+    })
   }
 
   render () {
@@ -48,8 +70,12 @@ class App extends Component {
             onChange={e => this.props.addAmountOwed(e)}
             value={this.props.patient.amountOwed}
           />
-          <Button>Add</Button>
+          <Button onClick={this.addPatient}>Add</Button>
         </div>
+        <PatientTable
+          onDelete={this.onDeletePatient}
+          patientList={this.props.patient.patients}
+        />
       </div>
     )
   }
@@ -88,6 +114,12 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       type: 'ADD_AMOUNT_OWED',
       payload: e.target.value
+    })
+  },
+  setPatientList (arr) {
+    dispatch({
+      type: 'PATIENT_LIST',
+      payload: arr
     })
   }
 })

@@ -1,10 +1,11 @@
 const initialState = {
-  patientId: '',
-  firstName: '',
-  lastName: '',
+  patient_id: '',
+  first_name: '',
+  last_name: '',
   doctor: '',
   insurance: '',
-  amountOwed: ''
+  amount_owed: '',
+  patients: []
 }
 
 export default function reducer (state = initialState, action) {
@@ -23,6 +24,8 @@ export default function reducer (state = initialState, action) {
       return { ...tempState, insurance: action.payload }
     case 'ADD_AMOUNT_OWED':
       return { ...tempState, amountOwed: action.payload }
+    case 'PATIENT_LIST':
+      return { ...tempState, patients: action.payload }
   }
   return tempState
 }

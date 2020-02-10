@@ -3,6 +3,7 @@ import { Input, Button } from 'antd'
 import { connect } from 'react-redux'
 import PatientTable from './PatientTable'
 import Axios from 'axios'
+import './App.css'
 
 class App extends Component {
   constructor () {
@@ -18,12 +19,12 @@ class App extends Component {
   }
   addPatient = e => {
     Axios.post('/api/createPatients', {
-      id: this.props.patient.patient_id,
-      firstName: this.props.patient.first_name,
-      lastName: this.props.patient.last_name,
+      id: this.props.patient.patientid,
+      firstName: this.props.patient.firstname,
+      lastName: this.props.patient.lastname,
       doctor: this.props.patient.doctor,
       insurance: this.props.patient.insurance,
-      amountOwed: this.props.patient.amount_owed
+      amountOwed: this.props.patient.amountowed
     }).then(resp => {
       console.log(resp)
       this.props.setPatientList(resp.data)
@@ -33,44 +34,51 @@ class App extends Component {
   render () {
     return (
       <div>
-        <div>
+        <div className="inputForm">
           <Input
+            className="inputRows"
             type='text'
             placeholder='Patient ID'
             onChange={e => this.props.addPatientId(e)}
-            value={this.props.patient.patientId}
+            value={this.props.patient.patientid}
           />
           <Input
+          className="inputRows"
             type='text'
             placeholder='First Name'
             onChange={e => this.props.addFirstName(e)}
-            value={this.props.patient.firstName}
+            value={this.props.patient.firstname}
           />
           <Input
+          className="inputRows"
             type='text'
             placeholder='Last Name'
             onChange={e => this.props.addLastName(e)}
-            value={this.props.patient.lastName}
+            value={this.props.patient.lastname}
           />
           <Input
+          className="inputRows"
             type='text'
             placeholder='Doctor'
             onChange={e => this.props.addDoctor(e)}
             value={this.props.patient.doctor}
           />
           <Input
+          className="inputRows"
             type='text'
             placeholder='Insurance'
             onChange={e => this.props.addInsurance(e)}
             value={this.props.patient.insurance}
           />
           <Input
+          className="inputRows"
             type='text'
             placeholder='Amount Owed'
             onChange={e => this.props.addAmountOwed(e)}
-            value={this.props.patient.amountOwed}
+            value={this.props.patient.amountowed}
           />
-          <Button onClick={this.addPatient}>Add</Button>
+         
+          <Button className="submitType" onClick={this.addPatient}>Add</Button>
         </div>
         <PatientTable
           onDelete={this.onDeletePatient}

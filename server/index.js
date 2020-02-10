@@ -14,12 +14,12 @@ app.get('/api/getPatients', (req, res) => {
   const dbInstance = req.app.get('db')
   dbInstance
     .getPatients(
-      req.query.patient_id,
-      req.query.first_name,
-      req.query.last_name,
+      req.query.patientid,
+      req.query.firstname,
+      req.query.lastname,
       req.query.doctor,
       req.query.insurance,
-      req.query.amount_owed
+      req.query.amountowed
     )
     .then(resp => {
       console.log(resp)
@@ -34,24 +34,24 @@ app.post('/api/createPatients', (req, res) => {
   const dbInstance = req.app.get('db')
   dbInstance
     .createPatients(
-      req.body.patient_id,
-      req.body.first_name,
-      req.body.last_name,
+      req.body.patientid,
+      req.body.firstname,
+      req.body.lastname,
       req.body.doctor,
       req.body.insurance,
-      req.body.amount_owed
+      req.body.amountowed
     )
     .then(resp => {
       console.log(resp)
       console.log(req.body)
       dbInstance
         .getPatients(
-          req.query.patient_id,
-          req.query.first_name,
-          req.query.last_name,
+          req.query.patientid,
+          req.query.firstname,
+          req.query.lastname,
           req.query.doctor,
           req.query.insurance,
-          req.query.amount_owed
+          req.query.amountowed
         )
         .then(resp => {
           res.status(200).send(resp)

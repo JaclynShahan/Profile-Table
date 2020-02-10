@@ -1,3 +1,3 @@
-INSERT INTO patients ("patient_id", "first_name", "last_name", "doctor", "insurance", "amount_owed")
+INSERT INTO patients ("patientid", "firstname", "lastname", "doctor", "insurance", "amountowed")
 VALUES ($1, $2, $3, $4, $5, $6)
 RETURNING *

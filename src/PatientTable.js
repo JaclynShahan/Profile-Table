@@ -41,7 +41,7 @@ class PatientTable extends Component {
       )
     })
     return (
-      <table>
+      <table className="patientTable">
         <tbody>
           <tr>
             <th>Delete</th>

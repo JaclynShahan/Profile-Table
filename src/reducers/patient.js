@@ -6,7 +6,12 @@ const initialState = {
   insurance: '',
   amountowed: '',
   patients: [],
-  showChargeModal: false
+  showChargeModal: false,
+  date: '',
+  charge: '',
+  amountpaid: '',
+  amountdue: '',
+  balance: ''
 }
 
 export default function reducer (state = initialState, action) {
@@ -27,8 +32,18 @@ export default function reducer (state = initialState, action) {
       return { ...tempState, amountowed: action.payload }
     case 'PATIENT_LIST':
       return { ...tempState, patients: action.payload }
-      case 'SHOW_CHARGE_MODAL':
-      return {...tempState, showChargeModal: action.payload}
+    case 'SHOW_CHARGE_MODAL':
+      return { ...tempState, showChargeModal: action.payload }
+    case 'CHARGE_DATE':
+      return { ...tempState, date: action.payload }
+    case 'ADD_CHARGE':
+      return { ...tempState, charge: action.payload }
+    case 'AMOUNT_PAID':
+      return { ...tempState, amountpaid: action.payload }
+    case 'AMOUNT_DUE':
+      return { ...tempState, amountdue: action.payload }
+    case 'ADD_BALANCE':
+      return { ...tempState, balance: action.payload }
   }
   return tempState
 }

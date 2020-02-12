@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Icon } from 'antd'
+import { connect } from 'react-redux'
 
 class PatientTable extends Component {
   constructor () {
@@ -21,14 +22,14 @@ class PatientTable extends Component {
               <Icon type='edit' />
             </button>
           </td>
-          <td>{person.patient_id}</td>
-          <td>{person.first_name}</td>
-          <td>{person.last_name}</td>
+          <td>{person.patientid}</td>
+          <td>{person.firstname}</td>
+          <td>{person.lastname}</td>
           <td>{person.doctor}</td>
           <td>{person.insurance}</td>
-          <td>{person.amount_owed}</td>
+          <td>{person.amountowed}</td>
           <td>
-            <button>
+            <button onClick={() => this.props.showChargeModal(true)}>
               <Icon type='dollar' />
             </button>
           </td>
@@ -41,7 +42,7 @@ class PatientTable extends Component {
       )
     })
     return (
-      <table className="patientTable">
+      <table className='patientTable'>
         <tbody>
           <tr>
             <th>Delete</th>
@@ -62,4 +63,19 @@ class PatientTable extends Component {
   }
 }
 
-export default PatientTable
+const mapStateToProps = state => {
+  console.log('state', state)
+  return state
+}
+const mapDispatchToProps = dispatch => ({
+  showChargeModal (val) {
+    dispatch({
+      type: 'SHOW_CHARGE_MODAL',
+      payload: val
+    })
+  }
+})
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PatientTable)

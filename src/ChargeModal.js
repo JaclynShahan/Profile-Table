@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { Modal } from 'antd'
+import { Modal, Button, Icon, Input } from 'antd'
+import { connect } from 'react-redux'
+
 class ChargeModal extends Component {
   constructor () {
     super()
@@ -16,7 +18,64 @@ class ChargeModal extends Component {
           visible={this.props.patient.showChargeModal}
         >
           <table>
-            <tbody />
+            <tbody>
+              <tr>
+                <th>Edit</th>
+                <th>Delete</th>
+                <th>Date:</th>
+                <th>Charges:</th>
+                <th>Amount Due:</th>
+                <th>Amount Paid:</th>
+                <th>Balance:</th>
+              </tr>
+              <tr>
+                <td>
+                  <Button>
+                    <Icon type='edit' />
+                  </Button>
+                </td>
+                <td>
+                  <Button>
+                    <Icon type='delete' />
+                  </Button>
+                </td>
+                <td>
+                  <Input
+                    type='text'
+                    onChange={e => this.props.addChargeDate(e)}
+                    value={this.props.patient.date}
+                  />
+                </td>
+                <td>
+                  <Input
+                    type='text'
+                    onChange={e => this.props.addNewCharge(e)}
+                    value={this.props.patient.charge}
+                  />
+                </td>
+                <td>
+                  <Input
+                    type='text'
+                    onChange={e => this.props.addAmountOwed(e)}
+                    value={this.props.patient.amountowed}
+                  />
+                </td>
+                <td>
+                  <Input
+                    type='text'
+                    onChange={e => this.props.addAmountPaid(e)}
+                    value={this.props.patient.amountpaid}
+                  />
+                </td>
+                <td>
+                  <Input
+                    type='text'
+                    onChange={e => this.props.addNewBalance(e)}
+                    value={this.props.patient.balance}
+                  />
+                </td>
+              </tr>
+            </tbody>
           </table>
         </Modal>
       </div>
@@ -34,6 +93,36 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       type: 'SHOW_CHARGE_MODAL',
       payload: val
+    })
+  },
+  addChargeDate (e) {
+    dispatch({
+      type: 'CHARGE_DATE',
+      payload: e.target.value
+    })
+  },
+  addNewCharge (e) {
+    dispatch({
+      type: 'ADD_CHARGE',
+      payload: e.target.value
+    })
+  },
+  addAmountPaid (e) {
+    dispatch({
+      type: 'AMOUNT_PAID',
+      payload: e.target.value
+    })
+  },
+  addAmountOwed (e) {
+    dispatch({
+      type: 'AMOUNT_OWED',
+      payload: e.target.value
+    })
+  },
+  addNewBalance (e) {
+    dispatch({
+      type: 'ADD_BALANCE',
+      payload: e.target.value
     })
   }
 })

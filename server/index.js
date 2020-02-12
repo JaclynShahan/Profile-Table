@@ -77,7 +77,7 @@ app.delete('/api/deletePatients:id', (req, res) => {
     })
 })
 
-const port = 3210
+const port = 3777
 massive(process.env.connectionString).then(db => {
   app.set('db', db)
   app.listen(port, () => console.log(`Server listening on port ${port}`))

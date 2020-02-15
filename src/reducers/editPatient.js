@@ -23,6 +23,8 @@ export default function reducer (state = initialState, action) {
       return { ...tempState, insurance: action.payload }
     case 'EDIT_AMOUNT_OWED':
       return { ...tempState, amountowed: action.payload }
+      case 'SET_INSPECTED_PATIENT':
+      return {...tempState, ...action.payload}
   }
   return tempState
 }

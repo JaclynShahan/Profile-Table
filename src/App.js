@@ -35,6 +35,14 @@ class App extends Component {
     })
   }
 
+  patientData = () => {
+    if (this.props.patient.searchPatientList.length > 0) {
+      console.log('Contents in Search Array Exist')
+      return this.props.patient.searchPatientList
+    }
+    return this.props.patient.patients
+  }
+
   addCharges = (i, obj) => {
     let tempArr = this.props.patient.patients[i].chargearr
     tempArr.push(obj)
@@ -106,10 +114,22 @@ class App extends Component {
             Add
           </Button>
         </div>
-        <PatientTable
-          onDelete={this.deletePatient}
-          patientList={this.props.patient.patients}
-        />
+        {this.patientData().map(person => (
+          <PatientTable
+            key={person.id}
+            id={person.id}
+            patientid={person.patientid}
+            firstname={person.firstname}
+            lastname={person.lastname}
+            doctor={person.doctor}
+            insurance={person.insurance}
+            amountowed={person.amountowed}
+            person={person}
+            onEditPatient={this.props.onEditPatient}
+            onDelete={this.deletePatient}
+            patientList={this.props.patient.patients}
+          />
+        ))}
       </div>
     )
   }

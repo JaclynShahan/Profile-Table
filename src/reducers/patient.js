@@ -11,7 +11,9 @@ const initialState = {
   charge: '',
   amountpaid: '',
   amountdue: '',
-  balance: ''
+  balance: '',
+  chargearr: [],
+  showEditModal: false
 }
 
 export default function reducer (state = initialState, action) {
@@ -44,6 +46,10 @@ export default function reducer (state = initialState, action) {
       return { ...tempState, amountdue: action.payload }
     case 'ADD_BALANCE':
       return { ...tempState, balance: action.payload }
+    case 'PATIENT_CHARGES':
+      return { ...tempState, chargearr: action.payload }
+    case 'SHOW_EDIT_MODAL':
+      return { ...tempState, showEditModal: action.payload }
   }
   return tempState
 }

@@ -19,14 +19,38 @@ class App extends Component {
   }
   addPatient = e => {
     Axios.post('/api/createPatients', {
-      id: this.props.patient.patientid,
-      firstName: this.props.patient.firstname,
-      lastName: this.props.patient.lastname,
-      doctor: this.props.patient.doctor,
-      insurance: this.props.patient.insurance,
-      amountOwed: this.props.patient.amountowed
+      patient: {
+        id: this.props.patient.id,
+        patientid: this.props.patient.patientid,
+        firstName: this.props.patient.firstname,
+        lastName: this.props.patient.lastname,
+        doctor: this.props.patient.doctor,
+        insurance: this.props.patient.insurance,
+        amountOwed: this.props.patient.amountowed,
+        patientcharges: []
+      }
     }).then(resp => {
       console.log(resp)
+      this.props.setPatientList(resp.data)
+    })
+  }
+
+  addCharges = (i, obj) => {
+    let tempArr = this.props.patient.patients[i].chargearr
+    tempArr.push(obj)
+    Axios.put('/api/updateCharges', {
+      tempArr: tempArr,
+      id: this.props.patients[i].id
+    }).then(resp => {
+      console.log(resp)
+      this.props.setPatientList(resp.data)
+    })
+  }
+
+  deletePatient = id => {
+    console.log(id)
+    Axios.delete(`/api/deletePatient/${id}`).then(resp => {
+      console.log('deleted patient', resp)
       this.props.setPatientList(resp.data)
     })
   }
@@ -34,54 +58,56 @@ class App extends Component {
   render () {
     return (
       <div>
-        <div className="inputForm">
+        <div className='inputForm'>
           <Input
-            className="inputRows"
+            className='inputRows'
             type='text'
             placeholder='Patient ID'
             onChange={e => this.props.addPatientId(e)}
             value={this.props.patient.patientid}
           />
           <Input
-          className="inputRows"
+            className='inputRows'
             type='text'
             placeholder='First Name'
             onChange={e => this.props.addFirstName(e)}
             value={this.props.patient.firstname}
           />
           <Input
-          className="inputRows"
+            className='inputRows'
             type='text'
             placeholder='Last Name'
             onChange={e => this.props.addLastName(e)}
             value={this.props.patient.lastname}
           />
           <Input
-          className="inputRows"
+            className='inputRows'
             type='text'
             placeholder='Doctor'
             onChange={e => this.props.addDoctor(e)}
             value={this.props.patient.doctor}
           />
           <Input
-          className="inputRows"
+            className='inputRows'
             type='text'
             placeholder='Insurance'
             onChange={e => this.props.addInsurance(e)}
             value={this.props.patient.insurance}
           />
           <Input
-          className="inputRows"
+            className='inputRows'
             type='text'
             placeholder='Amount Owed'
             onChange={e => this.props.addAmountOwed(e)}
             value={this.props.patient.amountowed}
           />
-         
-          <Button className="submitType" onClick={this.addPatient}>Add</Button>
+
+          <Button className='submitType' onClick={this.addPatient}>
+            Add
+          </Button>
         </div>
         <PatientTable
-          onDelete={this.onDeletePatient}
+          onDelete={this.deletePatient}
           patientList={this.props.patient.patients}
         />
       </div>

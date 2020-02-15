@@ -9,8 +9,32 @@ class ChargeModal extends Component {
   }
 
   render () {
+    const modalRows = this.props.chargeInfo.map((day, chargeIndex) => {
+      return (
+        <tr key={chargeIndex}>
+          <td>
+            <button>
+              <Icon type='edit' />
+            </button>
+          </td>
+          <td>
+            <button>
+              <Icon type='delete' />
+            </button>
+          </td>
+          <td>{day.date}</td>
+          <td>{day.charges}</td>
+          <td>{day.amountdue}</td>
+          <td>{day.amountpaid}</td>
+          <td>{day.balance}</td>
+        </tr>
+      )
+    })
     return (
       <div>
+        <button onClick={() => this.props.showChargeModal(true)}>
+          <Icon type='dollar' />
+        </button>
         <Modal
           okText='Save'
           title='Enter Charges'
@@ -75,6 +99,7 @@ class ChargeModal extends Component {
                   />
                 </td>
               </tr>
+              {modalRows}
             </tbody>
           </table>
         </Modal>

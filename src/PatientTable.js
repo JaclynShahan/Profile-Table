@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Icon } from 'antd'
 import { connect } from 'react-redux'
+import ChargeModal from './ChargeModal'
 
 class PatientTable extends Component {
   constructor () {
@@ -29,9 +30,11 @@ class PatientTable extends Component {
           <td>{person.insurance}</td>
           <td>{person.amountowed}</td>
           <td>
-            <button onClick={() => this.props.showChargeModal(true)}>
-              <Icon type='dollar' />
-            </button>
+            <ChargeModal
+              patientIndex={indexPoint}
+              chargeInfo={person.charges}
+              addCharges={this.props.addCharges}
+            />
           </td>
           <td>
             <button>
@@ -72,6 +75,12 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       type: 'SHOW_CHARGE_MODAL',
       payload: val
+    })
+  },
+  showChargeArr (arr) {
+    dispatch({
+      type: 'PATIENT_CHARGES',
+      payload: arr
     })
   }
 })

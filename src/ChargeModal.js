@@ -8,28 +8,39 @@ class ChargeModal extends Component {
     this.state = {}
   }
 
+  onOk = () => {
+      var charge = {
+          date: this.props.patient.date,
+          charge: this.props.patient.charge,
+          amountdue: this.props.patient.amountdue,
+          amountpaid: this.props.patient.amountpaid,
+          balance: this.props.patient.balance
+      }
+      this.props.addCharges(this.props.patientIndex, charge)
+      this.props.showChargeModal(false)
+  }
   render () {
-    const modalRows = this.props.chargeInfo.map((day, chargeIndex) => {
-      return (
-        <tr key={chargeIndex}>
-          <td>
-            <button>
-              <Icon type='edit' />
-            </button>
-          </td>
-          <td>
-            <button>
-              <Icon type='delete' />
-            </button>
-          </td>
-          <td>{day.date}</td>
-          <td>{day.charges}</td>
-          <td>{day.amountdue}</td>
-          <td>{day.amountpaid}</td>
-          <td>{day.balance}</td>
-        </tr>
-      )
-    })
+    // const modalRows = this.props.chargeInfo.map((day, chargeIndex) => {
+    //   return (
+    //     <tr key={chargeIndex}>
+    //       <td>
+    //         <button>
+    //           <Icon type='edit' />
+    //         </button>
+    //       </td>
+    //       <td>
+    //         <button>
+    //           <Icon type='delete' />
+    //         </button>
+    //       </td>
+    //       <td>{day.date}</td>
+    //       <td>{day.charges}</td>
+    //       <td>{day.amountdue}</td>
+    //       <td>{day.amountpaid}</td>
+    //       <td>{day.balance}</td>
+    //     </tr>
+    //   )
+    // })
     return (
       <div>
         <button onClick={() => this.props.showChargeModal(true)}>
@@ -99,7 +110,7 @@ class ChargeModal extends Component {
                   />
                 </td>
               </tr>
-              {modalRows}
+              {/* {modalRows} */}
             </tbody>
           </table>
         </Modal>

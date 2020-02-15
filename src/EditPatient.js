@@ -117,12 +117,12 @@ const mapDispatchToProps = dispatch => ({
       payload: e.target.value
     })
   },
-  setEditModal (val) {
-    dispatch({
-      type: 'EDIT_MODAL',
-      payload: val
-    })
-  }
+//   setEditModal (val) {
+//     dispatch({
+//       type: 'SET_EDIT_MODAL',
+//       payload: val
+//     })
+//   }
 })
 export default connect(
   mapStateToProps,

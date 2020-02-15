@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Icon } from 'antd'
+import { Icon, Modal } from 'antd'
 import { connect } from 'react-redux'
 import ChargeModal from './ChargeModal'
 import Axios from 'axios'
@@ -39,15 +39,15 @@ class PatientTable extends Component {
             </button>
           </td>
           <td>
-            <button onClick={() => this.openEditModal()}>
+            {/* <button onClick={() => this.openEditModal()}>
               <Icon type='edit' />
-            </button>
+            </button> */}
             <Modal
               okText=''
               title='Edit Patient'
-              onCancel={this.props.setEditModal(false)}
-              visible={this.props.patient.showEditModal}
-              footer={[]}
+            //   onCancel={this.props.setEditModal(false)}
+            //   visible={this.props.patient.setEditModal}
+            //   footer={[]}
             >
               <EditPatient onSave={this.onEditPatient} />
             </Modal>
@@ -114,7 +114,7 @@ const mapDispatchToProps = dispatch => ({
   },
   setEditModal (val) {
     dispatch({
-      type: 'EDIT_MODAL',
+      type: 'SET_EDIT_MODAL',
       payload: val
     })
   },

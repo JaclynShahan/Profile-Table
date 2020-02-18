@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import ChargeModal from './ChargeModal'
 import Axios from 'axios'
 import EditPatient from './EditPatient'
+import Exercises from './Exercises'
 
 class PatientTable extends Component {
   constructor () {
@@ -30,7 +31,7 @@ class PatientTable extends Component {
     })
   }
   render () {
-    const patientRows = this.props.patientList.map((person, indexPoint) => {
+    const patientRows = this.props.patient.patients.map((person, indexPoint) => {
       return (
         <tr key={indexPoint}>
           <td>
@@ -39,18 +40,10 @@ class PatientTable extends Component {
             </button>
           </td>
           <td>
-            {/* <button onClick={() => this.openEditModal()}>
-              <Icon type='edit' />
-            </button> */}
-            <Modal
-              okText=''
-              title='Edit Patient'
-            //   onCancel={this.props.setEditModal(false)}
-            //   visible={this.props.patient.setEditModal}
-            //   footer={[]}
-            >
-              <EditPatient onSave={this.onEditPatient} />
-            </Modal>
+            <EditPatient onSave={this.onEditPatient} />
+          
+            
+        
           </td>
           <td>{person.patientid}</td>
           <td>{person.firstname}</td>
@@ -61,14 +54,12 @@ class PatientTable extends Component {
           <td>
             <ChargeModal
               patientIndex={indexPoint}
-              chargeInfo={person.charges}
+              chargeInfo={this.props.patient.chargearr}
               addCharges={this.props.addCharges}
             />
           </td>
           <td>
-            <button>
-              <Icon type='folder-open' />
-            </button>
+           <Exercises />
           </td>
         </tr>
       )
@@ -88,8 +79,8 @@ class PatientTable extends Component {
             <th>Charges</th>
             <th>Exercises</th>
           </tr>
-        </tbody>
         {patientRows}
+        </tbody>
       </table>
     )
   }

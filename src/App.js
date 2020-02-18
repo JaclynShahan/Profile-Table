@@ -116,23 +116,24 @@ class App extends Component {
           </Button>
           <SearchPatient />
         </div>
-     
+
         {this.patientData().map(person => (
           <PatientTable
-          key={person.id}
+            key={person.id}
             id={person.id}
             patientid={person.patientid}
             firstname={person.firstname}
-          lastname={person.lastname}
+            lastname={person.lastname}
             doctor={person.doctor}
-           insurance={person.insurance}
+            insurance={person.insurance}
             amountowed={person.amountowed}
             person={person}
-           onEditPatient={this.props.onEditPatient}
+            onEditPatient={this.props.onEditPatient}
             onDelete={this.deletePatient}
             patientList={this.props.patient.patients}
+            addCharges={this.addCharges}
           />
-        ))}  
+        ))}
       </div>
     )
   }

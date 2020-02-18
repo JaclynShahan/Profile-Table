@@ -14,7 +14,8 @@ const initialState = {
   balance: '',
   chargearr: [],
   setEditModal: false,
-  searchPatientList: []
+  searchPatientList: [],
+  setExerciseModal: false
 }
 
 export default function reducer (state = initialState, action) {
@@ -51,8 +52,10 @@ export default function reducer (state = initialState, action) {
       return { ...tempState, chargearr: action.payload }
     case 'SET_EDIT_MODAL':
       return { ...tempState, setEditModal: action.payload }
-      case 'SEARCH_LIST' :
-      return {...tempState, searchPatientList: action.payload}
+    case 'SEARCH_LIST':
+      return { ...tempState, searchPatientList: action.payload }
+    case 'SET_EXERCISE_MODAL':
+      return { ...tempState, setExerciseModal: action.payload }
   }
   return tempState
 }

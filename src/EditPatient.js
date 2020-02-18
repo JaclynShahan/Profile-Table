@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Modal, Input, Button } from 'antd'
+import { Modal, Input, Button, Icon } from 'antd'
 
 class EditPatient extends Component {
   constructor () {
@@ -19,6 +19,18 @@ class EditPatient extends Component {
     } = this.props.editPatient
     return (
       <div>
+        <div>
+            <button onClick={() => this.props.setEditModal(true)}>
+              <Icon type='edit' />
+            </button>
+        </div>
+       <Modal
+              okText=''
+              title='Edit Patient'
+              onCancel={() => this.props.setEditModal(false)}
+              visible={this.props.patient.setEditModal}
+              footer={[]}
+            >
         <span>Edit Patient ID:</span>
         <Input
           placeholder={this.props.editPatient.patientid}
@@ -70,6 +82,7 @@ class EditPatient extends Component {
         >
           Save
         </Button>
+        </Modal>
       </div>
     )
   }
@@ -117,12 +130,12 @@ const mapDispatchToProps = dispatch => ({
       payload: e.target.value
     })
   },
-//   setEditModal (val) {
-//     dispatch({
-//       type: 'SET_EDIT_MODAL',
-//       payload: val
-//     })
-//   }
+  setEditModal (val) {
+    dispatch({
+      type: 'SET_EDIT_MODAL',
+      payload: val
+    })
+  }
 })
 export default connect(
   mapStateToProps,

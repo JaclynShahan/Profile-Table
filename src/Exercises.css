@@ -1,0 +1,26 @@
+.rows {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: flex-start;
+    align-content: stretch;
+    margin-left: -15px;
+}
+
+.links {
+    margin: 10px;
+    font-family: fantasy;
+    font-size: 15px;
+
+}
+
+.secondRow {
+    display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: flex-start;
+    align-content: stretch;
+  
+}

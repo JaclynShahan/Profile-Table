@@ -61,7 +61,15 @@ app.post('/api/createPatients', (req, res) => {
       console.log(err)
     })
 })
-
+app.put('/api/updatePatient', (req, res) => {
+  const {id, patientid, firstname, lastname, doctor, insurance, amountowed } = req.body
+  console.log(req.body)
+  console.log("Updated:", id, patientid, firstname, lastname, doctor, insurance, amountowed)
+  const dbInstance = req.app.get('db')
+  dbInstance.updatePatient(id, patientid, firstname, lastname, doctor, insurance, amountowed).then(() => {
+    getPatients(req, res)
+  })
+})
 app.delete('/api/deletePatients:id', (req, res) => {
   const dbInstance = req.app.get('db')
   dbInstance

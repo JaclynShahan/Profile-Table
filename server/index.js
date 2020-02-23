@@ -29,7 +29,24 @@ app.get('/api/getPatients', (req, res) => {
       console.log(err)
     })
 })
-
+app.get('/api/getCharges', (req, res) => {
+  const dbInstance = req.app.get('db')
+  dbInstance
+    .getCharges(
+      req.query.date,
+      req.query.charge,
+      req.query.amountpaid,
+      req.query.amountdue,
+      req.query.balance
+    )
+    .then(resp => {
+      console.log(resp)
+      res.status(200).send(resp)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+})
 app.post('/api/createPatients', (req, res) => {
   const dbInstance = req.app.get('db')
   dbInstance
@@ -61,14 +78,83 @@ app.post('/api/createPatients', (req, res) => {
       console.log(err)
     })
 })
-app.put('/api/updatePatient', (req, res) => {
-  const {id, patientid, firstname, lastname, doctor, insurance, amountowed } = req.body
-  console.log(req.body)
-  console.log("Updated:", id, patientid, firstname, lastname, doctor, insurance, amountowed)
+app.post('/api/createCharges', (req, res) => {
   const dbInstance = req.app.get('db')
-  dbInstance.updatePatient(id, patientid, firstname, lastname, doctor, insurance, amountowed).then(() => {
-    getPatients(req, res)
-  })
+  dbInstance
+    .createCharges(
+      req.body.date,
+      req.body.charge,
+      req.body.amountdue,
+      req.body.amountpaid,
+      req.body.balance
+    )
+    .then(resp => {
+      console.log(resp)
+      console.log(req.body)
+      dbInstance
+        .getCharges(
+          req.query.date,
+          req.query.charges,
+          req.query.amountdue,
+          req.query.amountpaid,
+          req.query.balance
+        )
+        .then(resp => {
+          res.status(200).send(resp)
+        })
+    })
+    .catch(err => {
+      console.log(err)
+    })
+})
+
+app.put('/api/updatePatient', (req, res) => {
+  const {
+    id,
+    patientid,
+    firstname,
+    lastname,
+    doctor,
+    insurance,
+    amountowed
+  } = req.body
+  console.log(req.body)
+  console.log(
+    'Updated:',
+    id,
+    patientid,
+    firstname,
+    lastname,
+    doctor,
+    insurance,
+    amountowed
+  )
+  const dbInstance = req.app.get('db')
+  dbInstance
+    .updatePatient(
+      id,
+      patientid,
+      firstname,
+      lastname,
+      doctor,
+      insurance,
+      amountowed
+    )
+    .then(() => {
+      getPatients(req, res)
+    })
+})
+
+app.put('/api/updateCharge', (req, res) => {
+  const { id, date, charge, amountdue, amountpaid, balance } = req.body
+  console.log(req.body)
+  console.log('Updated:', id, date, charge, amountdue, amountpaid, balance)
+  const dbInstance = req.app.get('db')
+  dbInstance
+    .updateCharge(id, date, charge, amountdue, amountpaid, balance)
+    .then(() => {
+      getCharges(req, res)
+    })
 })
 app.delete('/api/deletePatients:id', (req, res) => {
   const dbInstance = req.app.get('db')
@@ -77,6 +163,20 @@ app.delete('/api/deletePatients:id', (req, res) => {
     .then(() => {
       console.log('DeleteParams', req.params.id)
       dbInstance.getPatients().then(resp => {
+        res.status(200).send(resp)
+      })
+    })
+    .catch(err => {
+      console.log(err)
+    })
+})
+app.delete('/api/deleteCharges:id', (req, res) => {
+  const dbInstance = req.app.get('db')
+  dbInstance
+    .deleteCharges(req.params.id)
+    .then(() => {
+      console.log('DeleteChargeParams', req.params.id)
+      dbInstance.getCharges().then(resp => {
         res.status(200).send(resp)
       })
     })

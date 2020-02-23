@@ -1,0 +1,1 @@
+DELETE from patient_charges WHERE id = $1

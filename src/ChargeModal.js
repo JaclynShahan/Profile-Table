@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Modal, Button, Icon, Input } from 'antd'
 import { connect } from 'react-redux'
 import EditCharges from './EditCharges'
+import Axios from 'axios'
 
 class ChargeModal extends Component {
   constructor () {
@@ -9,18 +10,35 @@ class ChargeModal extends Component {
     this.state = {}
   }
 
-
-  onEditCharges = () => {
-      var charge = {
-          date: this.props.patient.date,
-          charge: this.props.patient.charge,
-          amountdue: this.props.patient.amountdue,
-          amountpaid: this.props.patient.amountpaid,
-          balance: this.props.patient.balance
-      }
-      this.props.addCharges(this.props.patientIndex, charge)
-      this.props.showChargeModal(false)
+  openEditChargeModal = () => {
+    const { chargeDate } = this.props
+    this.props.setInspectedCharges(chargeDate)
+    this.props.setEditChargeModal(true)
   }
+  onEditCharges = (dt, chrg, amtd, amtp, bal) => {
+    Axios.put('/api/updatePatient', {
+      date: dt,
+      charge: chrg,
+      amountdue: amtd,
+      amountpaid: amtp,
+      balance: bal,
+    }).then(resp => {
+      console.log('Updated Patient Charges:', resp)
+      this.props.setEditChargeModal(false)
+      this.props.setChargeList(resp.data)
+    })
+  }
+  // onEditCharges = () => {
+  //     var charge = {
+  //         date: this.props.patient.date,
+  //         charge: this.props.patient.charge,
+  //         amountdue: this.props.patient.amountdue,
+  //         amountpaid: this.props.patient.amountpaid,
+  //         balance: this.props.patient.balance
+  //     }
+  //     this.props.addCharges(this.props.patientIndex, charge)
+  //     this.props.showChargeModal(false)
+  // }
   render () {
     const modalRows = this.props.chargeInfo.map((day, chargeIndex) => {
       return (
@@ -157,6 +175,18 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       type: 'ADD_BALANCE',
       payload: e.target.value
+    })
+  },
+  setChargeList(arr) {
+    dispatch({
+      type: 'CHARGE_LIST',
+      payload: arr
+    })
+  },
+  setInspectedCharges(chargeDate) {
+    dispatch({
+      type: 'SET_INSPECTED_CHARGE_LIST',
+      payload: chargeDate
     })
   }
 })

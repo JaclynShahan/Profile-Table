@@ -143,10 +143,10 @@ class App extends Component {
             amountowed={person.amountowed}
             person={person}
             onEditPatient={this.props.onEditPatient}
-            
             onDelete={this.deletePatient}
             patientList={this.props.patient.patients}
             addCharges={this.addCharges}
+          
           />
         ))}
       </div>

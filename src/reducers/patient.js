@@ -49,7 +49,7 @@ export default function reducer (state = initialState, action) {
       return { ...tempState, amountdue: action.payload }
     case 'ADD_BALANCE':
       return { ...tempState, balance: action.payload }
-    case 'PATIENT_CHARGES':
+    case 'CHARGE_LIST':
       return { ...tempState, chargearr: action.payload }
     case 'SET_EDIT_MODAL':
       return { ...tempState, setEditModal: action.payload }

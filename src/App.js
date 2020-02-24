@@ -35,6 +35,20 @@ class App extends Component {
       this.props.setPatientList(resp.data)
     })
   }
+  // addCharges = e => {
+  //   Axios.post('/api/createCharges', {
+  //     charges: {
+  //       date: this.props.patient.date,
+  //       charge: this.props.patient.charge,
+  //       amountdue: this.props.patient.amountdue,
+  //       amountpaid: this.props.patient.amountpaid,
+  //       balance: this.props.patient.balance
+  //     }
+  //   }).then(resp => {
+  //     console.log(resp)
+  //     this.props.setChargeList(resp.data)
+  //   })
+  // }
 
   patientData = () => {
     if (this.props.patient.searchPatientList.length > 0) {
@@ -129,6 +143,7 @@ class App extends Component {
             amountowed={person.amountowed}
             person={person}
             onEditPatient={this.props.onEditPatient}
+            
             onDelete={this.deletePatient}
             patientList={this.props.patient.patients}
             addCharges={this.addCharges}
@@ -177,6 +192,12 @@ const mapDispatchToProps = dispatch => ({
   setPatientList (arr) {
     dispatch({
       type: 'PATIENT_LIST',
+      payload: arr
+    })
+  }, 
+  setChargeList(arr) {
+    dispatch({
+      type: 'CHARGE_LIST',
       payload: arr
     })
   }

@@ -56,6 +56,7 @@ class PatientTable extends Component {
               patientIndex={indexPoint}
               chargeInfo={this.props.patient.chargearr}
               addCharges={this.props.addCharges}
+              onEditCharges={this.props.onEditCharges}
             />
           </td>
           <td>

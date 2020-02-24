@@ -33,19 +33,19 @@ class EditPatient extends Component {
             >
         <span>Edit Patient ID:</span>
         <Input
-          placeholder={this.props.editPatient.patientid}
+          placeholder={this.props.patient.patientid}
           onChange={e => this.props.setEditPatientId(e)}
           value={this.props.editPatient.patientid}
         />
         <span>Edit First Name:</span>
         <Input
-          placeholder={this.props.editPatient.firstname}
+          placeholder={this.props.patient.firstname}
           onChange={e => this.props.setEditFirstName(e)}
           value={this.props.editPatient.firstname}
         />
         <span>Edit Last Name:</span>
         <Input
-          placeholder={this.props.editPatient.lastname}
+          placeholder={this.props.patient.lastname}
           onChange={e => this.props.setEditLastName(e)}
           value={this.props.editPatient.lastname}
         />
@@ -57,13 +57,13 @@ class EditPatient extends Component {
         />
         <span>Edit Insurance:</span>
         <Input
-          placeholder={this.props.editPatient.insurance}
+          placeholder={this.props.patient.insurance}
           onChange={e => this.props.setEditInsurance(e)}
           value={this.props.editPatient.insurance}
         />
         <span>Edit Amount Owed:</span>
         <Input
-          placeholder={this.props.editPatient.amountowed}
+          placeholder={this.props.patient.amountowed}
           onChange={e => this.props.setEditAmountOwed(e)}
           value={this.props.editPatient.amountowed}
         />

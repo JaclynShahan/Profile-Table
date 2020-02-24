@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Modal, Button, Icon, Input } from 'antd'
 import { connect } from 'react-redux'
+import EditCharges from './EditCharges'
 
 class ChargeModal extends Component {
   constructor () {
@@ -8,7 +9,8 @@ class ChargeModal extends Component {
     this.state = {}
   }
 
-  onOk = () => {
+
+  onEditCharges = () => {
       var charge = {
           date: this.props.patient.date,
           charge: this.props.patient.charge,
@@ -24,9 +26,7 @@ class ChargeModal extends Component {
       return (
         <tr key={chargeIndex}>
           <td>
-            <button>
-              <Icon type='edit' />
-            </button>
+           <EditCharges onSave={this.onEditCharges} />
           </td>
           <td>
             <button>
@@ -65,9 +65,7 @@ class ChargeModal extends Component {
               </tr>
               <tr>
                 <td>
-                  <Button>
-                    <Icon type='edit' />
-                  </Button>
+                <Button><Icon type="edit"/></Button>
                 </td>
                 <td>
                   <Button>

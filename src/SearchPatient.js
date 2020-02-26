@@ -44,6 +44,7 @@ onSearch = () => {
         return(
             <div>
                 <Input.Search 
+                className="searchInput"
                 placeholder="Search Patients..."
                 value={searchStr}
                 onChange={e => this.setState({searchStr: e.target.value})}

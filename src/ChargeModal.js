@@ -69,8 +69,9 @@ class ChargeModal extends Component {
           title='Enter Charges'
           onCancel={() =>this.props.showChargeModal(false)}
           visible={this.props.patient.showChargeModal}
+          width="1800"
         >
-          <table>
+          <table className="patientTable">
             <tbody>
               <tr>
                 <th>Edit</th>

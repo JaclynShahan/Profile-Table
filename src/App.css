@@ -34,7 +34,7 @@ margin-right: 30px;
 .patientTable {
   table-layout: fixed;
   width: 100vw;
-  
+  margin-top: 15px;
   border: 2px inset rgb(21, 21, 22);
   background-color: whitesmoke;
   overflow-y: auto;
@@ -74,4 +74,12 @@ margin-right: 30px;
 
 .overflowInfo {
   overflow-y: scroll;
+}
+
+.searchInput {
+  width: 50%;
+  border-radius: 20px;
+ margin-left: 20%;
+ margin-top: 15px;
+
 }

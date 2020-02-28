@@ -10,74 +10,98 @@ app = express()
 app.use(bodyParser.json())
 app.use(cors())
 
+const getPatients = (req, res) => {
+  const dbInstance = req.app.get('db')
+  dbInstance.getPatients().then(resp => res.status(200).send(resp))
+}
 app.get('/api/getPatients', (req, res) => {
-  const dbInstance = req.app.get('db')
-  dbInstance
-    .getPatients(
-      req.query.patientid,
-      req.query.firstname,
-      req.query.lastname,
-      req.query.doctor,
-      req.query.insurance,
-      req.query.amountowed
-    )
-    .then(resp => {
-      console.log(resp)
-      res.status(200).send(resp)
-    })
-    .catch(err => {
-      console.log(err)
-    })
+  getPatients(req, res)
 })
+
+const getCharges = (req, res) => {
+  const dbInstance = req.app.get('db')
+  dbInstance.getCharges().then(resp => res.status(200).send(resp))
+}
 app.get('/api/getCharges', (req, res) => {
-  const dbInstance = req.app.get('db')
-  dbInstance
-    .getCharges(
-      req.query.date,
-      req.query.charge,
-      req.query.amountpaid,
-      req.query.amountdue,
-      req.query.balance
-    )
-    .then(resp => {
-      console.log(resp)
-      res.status(200).send(resp)
-    })
-    .catch(err => {
-      console.log(err)
-    })
+  getCharges(req, res)
 })
-app.post('/api/createPatients', (req, res) => {
+// app.get('/api/getPatients', (req, res) => {
+//   const dbInstance = req.app.get('db')
+//   dbInstance
+//     .getPatients(
+//       req.query.patientid,
+//       req.query.firstname,
+//       req.query.lastname,
+//       req.query.doctor,
+//       req.query.insurance,
+//       req.query.amountowed
+//     )
+//     .then(resp => {
+//       console.log(resp)
+//       res.status(200).send(resp)
+//     })
+//     .catch(err => {
+//       console.log(err)
+//     })
+// })
+// app.get('/api/getCharges', (req, res) => {
+//   const dbInstance = req.app.get('db')
+//   dbInstance
+//     .getCharges(
+//       req.query.date,
+//       req.query.charge,
+//       req.query.amountpaid,
+//       req.query.amountdue,
+//       req.query.balance
+//     )
+//     .then(resp => {
+//       console.log(resp)
+//       res.status(200).send(resp)
+//     })
+//     .catch(err => {
+//       console.log(err)
+//     })
+// })
+app.post(`/api/createPatients`, (req, res) => {
+  const { patientid, firstname, lastname, doctor, insurance, amountowed} = req.body
+  console.log('Request received', patientid, firstname, lastname, doctor, insurance, amountowed)
+  console.log(req.body)
   const dbInstance = req.app.get('db')
-  dbInstance
-    .createPatients(
-      req.body.patientid,
-      req.body.firstname,
-      req.body.lastname,
-      req.body.doctor,
-      req.body.insurance,
-      req.body.amountowed
-    )
-    .then(resp => {
-      console.log(resp)
-      console.log(req.body)
-      dbInstance
-        .getPatients(
-          req.query.patientid,
-          req.query.firstname,
-          req.query.lastname,
-          req.query.doctor,
-          req.query.insurance,
-          req.query.amountowed
-        )
-        .then(resp => {
-          res.status(200).send(resp)
-        })
-    })
-    .catch(err => {
-      console.log(err)
-    })
+  dbInstance.createPatients(patientid, firstname, lastname, doctor, insurance, amountowed).then(() => {
+    getPatients(req, res)
+  })
 })
+// app.post('/api/createPatients', (req, res) => {
+//   const dbInstance = req.app.get('db')
+//   dbInstance
+//     .createPatients(
+//       req.body.patientid,
+//       req.body.firstname,
+//       req.body.lastname,
+//       req.body.doctor,
+//       req.body.insurance,
+//       req.body.amountowed
+//     )
+//     .then(resp => {
+//       console.log(resp)
+//       console.log(req.body)
+//       dbInstance
+//         .getPatients(
+//           req.query.patientid,
+//           req.query.firstname,
+//           req.query.lastname,
+//           req.query.doctor,
+//           req.query.insurance,
+//           req.query.amountowed
+//         )
+//         .then(resp => {
+//           res.status(200).send(resp)
+//         })
+//     })
+//     .catch(err => {
+//       console.log(err)
+//     })
+//})
 app.post('/api/createCharges', (req, res) => {
   const dbInstance = req.app.get('db')
   dbInstance

@@ -70,9 +70,9 @@ class App extends Component {
     })
   }
 
-  deletePatient = id => {
+  onDeletePatient = id => {
     console.log(id)
-    Axios.delete(`/api/deletePatient/${id}`).then(resp => {
+    Axios.delete(`/api/deletePatients/${id}`).then(resp => {
       console.log('deleted patient', resp)
       this.props.setPatientList(resp.data)
     })
@@ -143,7 +143,7 @@ class App extends Component {
             amountowed={person.amountowed}
             person={person}
             onEditPatient={this.props.onEditPatient}
-            onDelete={this.deletePatient}
+            onDeletePatient={this.onDeletePatient}
             patientList={this.props.patient.patients}
             addCharges={this.addCharges}
           
@@ -161,7 +161,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   addPatientId (e) {
     dispatch({
-      type: 'ADD_PATIENT_ID',
+      type: 'ADD_ID',
       payload: e.target.value
     })
   },
@@ -199,6 +199,12 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       type: 'CHARGE_LIST',
       payload: arr
+    })
+  },
+  addDoctor(e) {
+    dispatch({
+      type: 'ADD_DOCTOR',
+      payload: e.target.value
     })
   }
 })

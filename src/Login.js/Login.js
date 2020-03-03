@@ -1,13 +1,26 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Input, Button } from 'antd'
+import Axios from 'axios'
 
 class Login extends Component {
   constructor () {
     super()
-    this.state = {}
+    this.state = {
+      loading: false,
+      user: {}
+    }
   }
 
+  userAuthorization = () => {
+    Axios.post(`/api/verifyUser`, {
+      username: this.props.login.username,
+      password: this.props.login.password
+    }).then(resp => {
+      console.log(resp.data)
+      this.props.setAuthentication(resp.data)
+    })
+  }
   render () {
     return (
       <div>
@@ -23,7 +36,7 @@ class Login extends Component {
           value={this.props.login.password}
           onChange={e => this.props.setPassword(e)}
         />
-        <Button>Submit</Button>
+        <Button onClick={() => this.userAuthorization()}>Submit</Button>
       </div>
     )
   }

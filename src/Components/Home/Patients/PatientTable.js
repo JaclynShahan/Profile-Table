@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Icon, Modal } from 'antd'
 import { connect } from 'react-redux'
-import ChargeModal from './ChargeModal'
+import ChargeModal from '../Charges/ChargeModal'
 import Axios from 'axios'
 import EditPatient from './EditPatient'
-import Exercises from './Exercises'
+import Exercises from '../Exercises/Exercises'
 
 class PatientTable extends Component {
   constructor () {

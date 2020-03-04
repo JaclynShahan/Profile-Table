@@ -24,19 +24,21 @@ class Login extends Component {
   render () {
     return (
       <div>
-        <Input
-          placeholder='Enter Username...'
-          type='text'
-          value={this.props.login.username}
-          onChange={e => this.props.setUsername(e)}
-        />
-        <Input
-          placeholder='Enter Password...'
-          type='password'
-          value={this.props.login.password}
-          onChange={e => this.props.setPassword(e)}
-        />
-        <Button onClick={() => this.userAuthorization()}>Submit</Button>
+        <form>
+          <Input
+            placeholder='Enter Username...'
+            type='text'
+            value={this.props.login.username}
+            onChange={e => this.props.setUsername(e)}
+          />
+          <Input
+            placeholder='Enter Password...'
+            type='password'
+            value={this.props.login.password}
+            onChange={e => this.props.setPassword(e)}
+          />
+          <Button onClick={() => this.userAuthorization()}>Submit</Button>
+        </form>
       </div>
     )
   }

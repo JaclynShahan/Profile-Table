@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-const bodyParser = require('body-parser')
+// const bodyParser = require('body-parser')
 const massive = require('massive')
 const Axios = require('axios')
 const { json } = require('body-parser')
@@ -9,9 +9,10 @@ require('dotenv').config()
 
 const controller = require(`${__dirname}/controller/controller`)
 
-app = express()
-app.use(bodyParser.json())
+const app = express()
+
 app.use(cors())
+app.use(express.json())
 app.use(
   session({
     secret: 'Here is my secret',
@@ -22,6 +23,8 @@ app.use(
 
 app.get('/api/login', controller.loginUser)
 app.put('/api/logout', controller.logoutUser)
+
+const port = 3777
 
 app.post('/api/verifyUser', (req, res) => {
   console.log('User Request Received')
@@ -256,7 +259,6 @@ app.delete('/api/deleteCharges:id', (req, res) => {
     })
 })
 
-const port = 3777
 massive(process.env.connectionString).then(db => {
   app.set('db', db)
   app.listen(port, () => console.log(`Server listening on port ${port}`))

@@ -17,7 +17,7 @@ class App extends Component {
 
   logoutUser () {
     Axios.put('/api/logout').then(resp => {
-      console.log(resp, "logout user")
+      console.log(resp, 'logout user')
       this.props.setUsername()
       this.props.setPassword()
       this.props.setAuthentication(false)

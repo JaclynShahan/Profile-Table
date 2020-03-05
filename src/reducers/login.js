@@ -1,3 +1,5 @@
+const GET_USER = 'GET_USER'
+
 const initialState = {
   username: '',
   password: '',
@@ -14,6 +16,13 @@ export default function reducer (state = initialState, action) {
       return { ...tempState, password: action.payload }
     case 'SET_AUTHENTICATION':
       return { ...tempState, authentication: action.payload }
+    case GET_USER + '_PENDING':
+      return Object.assign({}, state, { isLoading: true })
+    case GET_USER + '_FULFILLED':
+      return Object.assign({}, state, {
+        user: action.payload,
+        isLoading: false
+      })
   }
   return tempState
 }

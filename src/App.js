@@ -5,7 +5,7 @@ import router from './router'
 import { connect } from 'react-redux'
 import Axios from 'axios'
 import { Redirect } from 'react-router-dom'
-import { Icon } from 'antd'
+import { Icon, Button } from 'antd'
 import Login from './Login/Login'
 import Home from './Components/Home/Home'
 
@@ -15,7 +15,14 @@ class App extends Component {
     this.state = {}
   }
 
-  logoutUser () {}
+  logoutUser () {
+    Axios.put('/api/logout').then(resp => {
+      console.log(resp, "logout user")
+      this.props.setUsername()
+      this.props.setPassword()
+      this.props.setAuthentication(false)
+    })
+  }
 
   render () {
     return (
@@ -42,7 +49,26 @@ const mapStateToProps = state => {
   return state
 }
 
-const mapDispatchToProps = dispatch => ({})
+const mapDispatchToProps = dispatch => ({
+  setUsername () {
+    dispatch({
+      type: 'SET_USERNAME',
+      payload: ''
+    })
+  },
+  setPassword () {
+    dispatch({
+      type: 'SET_PASSWORD',
+      payload: ''
+    })
+  },
+  setAuthentication (val) {
+    dispatch({
+      type: 'SET_AUTHENTICATION',
+      payload: val
+    })
+  }
+})
 
 export default connect(
   mapStateToProps,

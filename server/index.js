@@ -3,12 +3,35 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const massive = require('massive')
 const Axios = require('axios')
-
+const { json } = require('body-parser')
+const session = require('express-session')
 require('dotenv').config()
+
+const controller = require(`${__dirname}/controller/controller`)
 
 app = express()
 app.use(bodyParser.json())
 app.use(cors())
+app.use(
+  session({
+    secret: 'Here is my secret',
+    resave: true,
+    saveUninitialized: true
+  })
+)
+
+app.get('/api/login', controller.loginUser)
+app.put('/api/logout', controller.logoutUser)
+
+app.post('/api/verifyUser', (req, res) => {
+  console.log('User Request Received')
+  const { username, password } = req.body
+  console.log(process.env.username, process.env.password)
+  console.log(username, password)
+  if (username == process.env.username && password == process.env.password) {
+    res.status(200).send(true)
+  } else res.status(200).send(false)
+})
 
 const getPatients = (req, res) => {
   const dbInstance = req.app.get('db')
@@ -63,13 +86,37 @@ app.get('/api/getCharges', (req, res) => {
 //     })
 // })
 app.post(`/api/createPatients`, (req, res) => {
-  const { patientid, firstname, lastname, doctor, insurance, amountowed} = req.body
-  console.log('Request received', patientid, firstname, lastname, doctor, insurance, amountowed)
+  const {
+    patientid,
+    firstname,
+    lastname,
+    doctor,
+    insurance,
+    amountowed
+  } = req.body
+  console.log(
+    'Request received',
+    patientid,
+    firstname,
+    lastname,
+    doctor,
+    insurance,
+    amountowed
+  )
   console.log(req.body)
   const dbInstance = req.app.get('db')
-  dbInstance.createPatients(patientid, firstname, lastname, doctor, insurance, amountowed).then(() => {
-    getPatients(req, res)
-  })
+  dbInstance
+    .createPatients(
+      patientid,
+      firstname,
+      lastname,
+      doctor,
+      insurance,
+      amountowed
+    )
+    .then(() => {
+      getPatients(req, res)
+    })
 })
 // app.post('/api/createPatients', (req, res) => {
 //   const dbInstance = req.app.get('db')
@@ -101,7 +148,7 @@ app.post(`/api/createPatients`, (req, res) => {
 //     .catch(err => {
 //       console.log(err)
 //     })
-//})
+// })
 app.post('/api/createCharges', (req, res) => {
   const dbInstance = req.app.get('db')
   dbInstance

@@ -4,7 +4,9 @@ const initialState = {
   username: '',
   password: '',
   authentication: false,
-  user: {}
+  user: {},
+  newusername: '',
+  newpassword: ''
 }
 
 export default function reducer (state = initialState, action) {
@@ -23,6 +25,10 @@ export default function reducer (state = initialState, action) {
         user: action.payload,
         isLoading: false
       })
+    case 'SET_NEW_USERNAME':
+      return { ...tempState, newusername: action.payload }
+    case 'SET_NEW_PASSWORD':
+      return { ...tempState, newpassword: action.payload }
   }
   return tempState
 }
